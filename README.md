@@ -24,14 +24,14 @@ Run the script with the following command:
 
 - `input_csv`: Path to the combined input CSV file.
 - `plate_format`: Plate format (24-well, 96-well, or 384-well).
-- `order`: Mixture order corresponds to well location (by column, by row, snake by column, or snake by row).
+- `order`: How mixture order is mapped onto plate (write in quotations "by column", "by row", "snake by column", or "snake by row").
 - `output_csv`: Path to the output CSV file.
 
 ### Use example
 
 </br>
 
-> `python mixtures_main.py input.csv 96-well by row output.csv`
+> `python mixtures_main.py input.csv 96-well "by row" output.csv`
 
 </br>
 
