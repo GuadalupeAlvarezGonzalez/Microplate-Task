@@ -2,7 +2,7 @@
 
 ## Description
 
-This Python script (`mixtures_main.py`) computes the volumes of source liquids that are needed to create a series of required dilution mixtures, and assigns them to well locations on a desired microtiter plate, and in a specified order. 
+This Python script (`mixtures_main.py`) computes the volumes of source liquids that are needed to create a series of required dilution mixtures, and assigns them to well locations on a desired microtiter plate, and in a specified order. It also outputs a map of the resulting layout for record keeping. 
 
 ## Installation
 
@@ -83,6 +83,8 @@ CSV Data: An example of what the data would look like in excel for three stocks 
 </br>
 
 The output CSV contains the assigned mixture volumes and corresponding wells. Below is an example for the output obtained when assigning the input data to a 24-well "by row".
+
+This script will also output a .png image of the corresponding layout. 
 
 </br>
 
