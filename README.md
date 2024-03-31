@@ -14,7 +14,7 @@ This Python script (`mixtures_main.py`) computes the volumes of source liquids t
 
 ## Usage
 
-Open your terminal, and type the following general command to run the script:
+In your terminal type the following general command to run the script:
 
 </br>
 
@@ -23,7 +23,7 @@ Open your terminal, and type the following general command to run the script:
 
 </br>
 
-Where you have to assign each input with:
+Where:
 
 </br>
 
@@ -34,7 +34,7 @@ Where you have to assign each input with:
 
 </br>
 
-The terminal will also ask wether you require an image map of the resulting plate layout. Respond with yes or not and if yes provide a name for the image file. 
+A prompt will also ask wether you require an image map of the resulting plate layout. Respond with yes or no, and if yes provide a name for the image file. 
 
 </br>
 
