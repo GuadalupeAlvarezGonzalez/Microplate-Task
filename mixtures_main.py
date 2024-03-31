@@ -3,13 +3,15 @@ import numpy as np
 import argparse
 import sys
 
-def extractor(input_csv):
+
+def extractor(input_csv): 
+    #Extracts data from input csv file
     data = pd.read_csv(input_csv)
 
-    # Convert 'Concentrations' column to numeric values
+    # Converts 'Concentrations' column to numeric values
     data['Concentrations (mM)'] = data['Concentrations (mM)'].apply(lambda x: pd.to_numeric(x.split(', '), errors='coerce') if isinstance(x, str) else np.nan)
 
-    # Check for missing or invalid concentration values
+    # Checks for missing or not valid concentration values
     if data['Concentrations (mM)'].apply(lambda x: np.isnan(x).any()).any():
         raise ValueError("One or more concentration values are missing or invalid. Please check the 'Concentrations' column in the input CSV file.")
 
@@ -18,6 +20,7 @@ def extractor(input_csv):
     desired_mixtures = data[data['Type'] == 'Mixture']
 
     return source_liquids, desired_mixtures
+
 
 def calculate_volumes(source_liquids, desired_mixtures):
     """
@@ -63,7 +66,7 @@ def get_plate_layout(plate_format):
     Raises: ValueError: If an invalid plate format is specified.
     """
 
-    #Generate list of lists for each plate (sequential ASCII/Unicode)
+    #Generate list of lists for each plate (sequential unicode)
     if plate_format == '24-well':
         return [[f'{chr(65 + i)}{j+1}' for j in range(6)] for i in range(4)]
     elif plate_format == '96-well':
@@ -97,7 +100,7 @@ def assign_wells(volumes_and_wells, plate_format, order):
     rows = len(plate_layout)
     cols = len(plate_layout[0])
     plate_size = rows * cols #total number of wells.
-    total_volumes = len(volumes_and_wells)#total number of mixture samples to assign.
+    total_volumes = len(volumes_and_wells) #total number of mixture samples to assign.
     
     if total_volumes > plate_size:
         raise ValueError(f"The plate size you are using is {plate_size}, "
@@ -109,45 +112,45 @@ def assign_wells(volumes_and_wells, plate_format, order):
         well = plate_layout[row_index][col_index] 
         assigned_wells.append((volumes, well))
         
-        if order == 'by row': #Assigns sequentially through plate layout list, starts again in next row.
+        if order == 'by row': #Assigns through row adding new col, starts again in first col at last row.
             col_index += 1
             if col_index == cols:
                 col_index = 0
                 row_index += 1
         
-        elif order == 'by column': #Assigns sequentially through plate layout list, starts again in next column.
+        elif order == 'by column':  #Assigns through col adding new row, starts again in first row at last col.
             row_index += 1
             if row_index == rows:
                 row_index = 0
                 col_index += 1
 
-        elif order == 'snake by row': #Logic is that odd rows go in forward direction while even rows go backwards:
-            if row_index % 2 == 0:  # Even row, so start assigning well
+        elif order == 'snake by row': #Same as by row but odd rows add col in forward direction, even rows substracts col:
+            if row_index % 2 == 0:  # If row is even
                 col_index += 1
-                if col_index == cols:  # If reached end of row, move to the next row
+                if col_index == cols:  
                     col_index = cols - 1  
                     row_index += 1
-            else:  # Odd row, start assigning well, reverse logic
+            else:  # if row is odd
                 col_index -= 1
-                if col_index < 0:  # If reached beginning of row, move to the next row
+                if col_index < 0: # If reached beginning of row, move to the next row
                     col_index = 0  
                     row_index += 1
-            if row_index == rows: # If reached last row, move to the next column
+            if row_index == rows: # If reached last row, move to the next col
                 row_index = rows - 1
                 col_index += 1
        
         elif order == 'snake by column': #Same logic than snake by row but for columns
             if col_index % 2 == 0:  # Even column
                 row_index += 1
-                if row_index == rows:  # If reached end of column, move to the next column
+                if row_index == rows: 
                     row_index = rows - 1 
                     col_index += 1
             else:  # Odd column
                 row_index -= 1
-                if row_index < 0:  # If reached beginning of column, move to the next column
+                if row_index < 0: 
                     row_index = 0 
                     col_index += 1
-            if col_index == cols:# If reached last column, move to the next row
+            if col_index == cols:
                 col_index = cols - 1
                 row_index += 1
                 
@@ -156,11 +159,12 @@ def assign_wells(volumes_and_wells, plate_format, order):
 
 def write_results(output_csv, assigned_wells, desired_mixtures):
     """
-    For each mixture, awrites a list of source-liquid volumes (in µl) to be mixed along with the target well.
+    For each mixture, writes a list of source-liquid volumes (in µl) to be mixed along with the target well.
     """
 
     with open(output_csv, 'w') as file:
         file.write("Mixture,Target Well\n")
+        
         for i, (volumes, well) in enumerate(assigned_wells):
             components = volumes[:-1]
             water_volume = volumes[-1]
@@ -194,5 +198,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args.input_csv, args.plate_format, args.order, args.output_csv)
+
+
 
 
