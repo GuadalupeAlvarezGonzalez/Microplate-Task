@@ -44,9 +44,9 @@ Where:
 The input CSV should have the following columns:
 
 - **Type**: Type of liquid (Either "Source" or "Mixture").
-- **Components**: Components of the liquid. If a mixture, separate components by commas (i.e NaCl, EDTA, DMSO)
-- **Concentrations (mM)**: Concentrations of components, in their corresponding order. If a mixture, separate desired concentrations by commas (i.e 10, 100, 10).
-- **Final Volume (ul)**: The desired final volume for the mixture.
+- **Components**: Components of the source and mixtures. If a mixture, separate the components by commas (i.e NaCl, EDTA, DMSO)
+- **Concentrations (mM)**: Concentrations of the components, in millimolar (mM). If a mixture, separate desired concentrations by commas in their corresponding order (i.e 10, 100, 10).
+- **Final Volume (ul)**: The desired final volume for the mixture, in microliters (ul).
 
 </br>
 
