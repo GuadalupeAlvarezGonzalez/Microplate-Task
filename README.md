@@ -27,9 +27,10 @@ Run the script with the following command:
 - `order`: How mixture order is mapped onto plate (write in quotations "by column", "by row", "snake by column", or "snake by row").
 - `output_csv`: Path to the output CSV file.
 
+</br>
+
 ### Use example
 
-</br>
 
 > `python mixtures_main.py input.csv 96-well "by row" output.csv`
 
