@@ -10,7 +10,7 @@ This Python script (`mixtures_main.py`) computes the volumes of source liquids t
 - Ensure you have Python installed.
 - Install required packages using
 
-> pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ## Usage
 
@@ -19,7 +19,7 @@ Run the script with the following terminal command:
 </br>
 
 
-> `python mixtures_main.py input_csv plate_format order output_csv`
+`python mixtures_main.py input_csv plate_format order output_csv`
 
 </br>
 
