@@ -15,10 +15,6 @@ def extractor(input_csv):
     """
     data = pd.read_csv(input_csv)
     
-    # Check if the input CSV file exists or its correctly mapped 
-    if not os.path.exists(input_csv):
-        raise FileNotFoundError(f"Input CSV file '{input_csv}' not found or correclty specified.")
-
     # Check if the required columns are present
     required_columns = ['Type', 'Components', 'Concentrations (mM)', 'Final Volume (ul)']
     if not set(required_columns).issubset(data.columns):
@@ -82,6 +78,7 @@ def calculate_volumes(source_liquids, desired_mixtures):
     return all_mixture_volumes
 
 
+
 def get_plate_layout(plate_format):
     """ Geneates an alphanumeric list of lists (layout) of a specified plate format, either '24-well', '96-well', or '384-well'.
     Outputs list of lists: Plate layout containing well positions.
@@ -98,6 +95,7 @@ def get_plate_layout(plate_format):
         raise ValueError("Would be nice but this plate layout does not exsist. Please choose either '24-well', '96-well', or '384-well'.")
 
     return plate_layout
+
 
 
 def assign_wells(all_mixture_volumes, plate_format, order): # This is the fun function ✨
@@ -179,6 +177,8 @@ def assign_wells(all_mixture_volumes, plate_format, order): # This is the fun fu
     return assigned_wells
 
 
+
+
 def write_results(output_csv, assigned_wells, desired_mixtures):
     """ For each mixture, writes a CSV output file containing a list of source-liquid volumes (in µl) 
     to be mixed along with the target well.
@@ -194,12 +194,14 @@ def write_results(output_csv, assigned_wells, desired_mixtures):
             file.write(f"{mix_info}\n")
 
 
-def visualize_plate_layout(assigned_wells, plate_format, order): #Very quick plotting!
+
+
+def visualize_plate_layout(assigned_wells, plate_format, order, output_image=None): #Very quick plotting!
     """ Quick visualiation of the plate layout with mixtures in their corresponding well. """
     
     well_info = {} # Create well_info dictionary
     for i, (_, well) in enumerate(assigned_wells):
-        well_info[well] = f"Mix \n {i+1}"  
+        well_info[well] = f"{i+1}"  
 
     plate_layout = get_plate_layout(plate_format)
     rows = len(plate_layout)  
@@ -214,7 +216,7 @@ def visualize_plate_layout(assigned_wells, plate_format, order): #Very quick plo
             well = plate_layout[rows - i - 1][j]  
             x = j + 0.5 #centers the circles within each "well"
             y = i + 0.5
-            ax.add_patch(plt.Circle((x, y), 0.4, color='plum', alpha=0.5))  # Crates a circle as "well"
+            ax.add_patch(plt.Circle((x, y), 0.4, color='wheat', alpha=0.5))  # Crates a circle as "well"
 
             if well in well_info:
                 plt.text(x, y, well_info[well], ha='center', va='center', fontsize=6) #center label for Mix 
@@ -223,22 +225,21 @@ def visualize_plate_layout(assigned_wells, plate_format, order): #Very quick plo
     ax.set_title(f"{plate_format} plate with mixtures assigned {order}", fontsize = 9, pad = 10, fontweight="bold")
 
     ax.set_xticks(np.arange(0, cols, 1) + 0.5)
-    ax.set_xticklabels([str(i+1) for i in range(cols)], fontsize = 8) 
-
+    ax.set_xticklabels([str(i+1) for i in range(cols)], fontsize = 8, fontweight="bold") 
     ax.set_yticks(np.arange(0, rows, 1) + 0.5)
-    ax.set_yticklabels([chr(ord('A') + i) for i in reversed(range(rows))], fontsize = 8) 
+    ax.set_yticklabels([chr(ord('A') + i) for i in reversed(range(rows))], fontsize = 8, fontweight="bold") 
 
     ax.tick_params(which='minor', length=0)  # Remove ticks at midpoints to center labels
 
     ax.set_xlim(0, cols)
     ax.set_ylim(0, rows)
-    ax.grid(True, which='both', linewidth=0.5) 
+    ax.grid(True, which='both', linewidth=0.6, color='white', alpha = 0.4) 
     ax.set_aspect(1)
 
-    ax.grid(color='white') 
-
-    plt.savefig('layout_graph.png', dpi=300, bbox_inches='tight') 
-    plt.close() 
+    if output_image:
+            plt.savefig(output_image, dpi=300, bbox_inches='tight') 
+            plt.close() 
+    
 
 
 
@@ -253,10 +254,17 @@ def main(input_csv, plate_format, order, output_csv):
     all_mixture_volumes = calculate_volumes(source_liquids, desired_mixtures)
     assigned_wells = assign_wells(all_mixture_volumes, plate_format, order)
     write_results(output_csv, assigned_wells, desired_mixtures)
-    well_info = visualize_plate_layout(assigned_wells, plate_format, order)
+
+    #Prompt to ask if user wants to generate image and if so what name
+    generate_image = input("Do you want to generate the resulting plate layout image? (Yes/No): ")
+    if generate_image.lower().startswith(('y', 'yes')):
+        image_name = input("Enter the filename for the image: ")
+        visualize_plate_layout(assigned_wells, plate_format, order, image_name)
+    else:
+        visualize_plate_layout(assigned_wells, plate_format, order)
     
     # Print completion message with Unicode art
-    print(f"\n \n Congrats! Your mixtures output file and a layout image have been written in your specified path. \n "
+    print(f"\n \n Congrats! Your mixtures output file(s) have been written in your specified path. \n "
         f"You're now a step closer to automating your dilutions!", "\U0001F9EA", "\U0001F916" "\n \n ")
 
 
@@ -271,6 +279,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args.input_csv, args.plate_format, args.order, args.output_csv)
+
 
 
 
