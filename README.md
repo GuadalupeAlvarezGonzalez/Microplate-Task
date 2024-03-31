@@ -104,3 +104,9 @@ This script will also output a .png image of the corresponding layout.
 
 
 </br>
+
+## Optional quick layout image
+
+![layout_graph](https://github.com/GuadalupeAlvarezGonzalez/Microplate-Task/assets/129006181/c2f132f9-7e0f-443c-8b83-f7ac1ac2161f)
+
+</br>
