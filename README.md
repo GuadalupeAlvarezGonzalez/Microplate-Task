@@ -107,6 +107,6 @@ This script will also output a .png image of the corresponding layout.
 
 ## Optional quick layout image
 
-<img src="https://github.com/GuadalupeAlvarezGonzalez/Microplate-Task/assets/129006181/c2f132f9-7e0f-443c-8b83-f7ac1ac2161f" width="500" />
+<img src="https://github.com/GuadalupeAlvarezGonzalez/Microplate-Task/assets/129006181/1bc0253c-851c-4cc2-868b-21bb124a876e" width="500" />
 
 </br>
