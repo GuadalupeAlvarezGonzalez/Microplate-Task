@@ -3,6 +3,7 @@ import numpy as np
 import argparse
 import sys
 import os
+import matplotlib.pyplot as plt
 
 
 def extractor(input_csv): 
@@ -99,7 +100,6 @@ def get_plate_layout(plate_format):
     return plate_layout
 
 
-
 def assign_wells(all_mixture_volumes, plate_format, order): # This is the fun function ✨
     """ This function assigns eachn mixture to a well in a microtiter plate, according to a specified order.
     Inputs: all_mixture_volumes (list of tuples): A list containing tuples of calculated resulting mixture and required volumes.
@@ -184,14 +184,62 @@ def write_results(output_csv, assigned_wells, desired_mixtures):
     to be mixed along with the target well.
     """
     with open(output_csv, 'w') as file:
-        file.write("Mixture,Target Well\n")
+        file.write("Mixture Number,Mixture,Target Well\n")
         
         for i, (volumes, well) in enumerate(assigned_wells):
             components = volumes[:-1]
             water_volume = volumes[-1]
             components_info = ' + '.join([f'{v:.2f} uL {c}' for v, c in zip(components, desired_mixtures.iloc[i]['Components'].split(', '))])
-            mix_info = f"{components_info} + {water_volume:.2f} uL Water, {well}"
+            mix_info = f"{i+1},{components_info} + {water_volume:.2f} uL Water,{well}"
             file.write(f"{mix_info}\n")
+
+
+def visualize_plate_layout(assigned_wells, plate_format, order): #Very quick plotting!
+    """ Quick visualiation of the plate layout with mixtures in their corresponding well. """
+    
+    well_info = {} # Create well_info dictionary
+    for i, (_, well) in enumerate(assigned_wells):
+        well_info[well] = f"Mix \n {i+1}"  
+
+    plate_layout = get_plate_layout(plate_format)
+    rows = len(plate_layout)  
+    cols = len(plate_layout[0])  
+    
+    plt.figure(figsize=(5, 4)) #make new plot
+    ax = plt.gca()
+    
+
+    for i, row in enumerate(reversed(plate_layout)): 
+        for j, _ in enumerate(row):
+            well = plate_layout[rows - i - 1][j]  
+            x = j + 0.5 #centers the circles within each "well"
+            y = i + 0.5
+            ax.add_patch(plt.Circle((x, y), 0.4, color='plum', alpha=0.5))  # Crates a circle as "well"
+
+            if well in well_info:
+                plt.text(x, y, well_info[well], ha='center', va='center', fontsize=6) #center label for Mix 
+
+    #axis and titles:
+    ax.set_title(f"{plate_format} plate with mixtures assigned {order}", fontsize = 9, pad = 10, fontweight="bold")
+
+    ax.set_xticks(np.arange(0, cols, 1) + 0.5)
+    ax.set_xticklabels([str(i+1) for i in range(cols)], fontsize = 8) 
+
+    ax.set_yticks(np.arange(0, rows, 1) + 0.5)
+    ax.set_yticklabels([chr(ord('A') + i) for i in reversed(range(rows))], fontsize = 8) 
+
+    ax.tick_params(which='minor', length=0)  # Remove ticks at midpoints to center labels
+
+    ax.set_xlim(0, cols)
+    ax.set_ylim(0, rows)
+    ax.grid(True, which='both', linewidth=0.5) 
+    ax.set_aspect(1)
+
+    ax.grid(color='white') 
+
+    plt.savefig('layout_graph.png', dpi=300, bbox_inches='tight') 
+    plt.close() 
+
 
 
 def main(input_csv, plate_format, order, output_csv):
@@ -205,8 +253,10 @@ def main(input_csv, plate_format, order, output_csv):
     all_mixture_volumes = calculate_volumes(source_liquids, desired_mixtures)
     assigned_wells = assign_wells(all_mixture_volumes, plate_format, order)
     write_results(output_csv, assigned_wells, desired_mixtures)
-
-    print(f"\n \n Congrats! Your mixtures output file has been written in your specified path. \n "
+    well_info = visualize_plate_layout(assigned_wells, plate_format, order)
+    
+    # Print completion message with Unicode art
+    print(f"\n \n Congrats! Your mixtures output file and a layout image have been written in your specified path. \n "
         f"You're now a step closer to automating your dilutions!", "\U0001F9EA", "\U0001F916" "\n \n ")
 
 
@@ -221,6 +271,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args.input_csv, args.plate_format, args.order, args.output_csv)
+
+
 
 
 
