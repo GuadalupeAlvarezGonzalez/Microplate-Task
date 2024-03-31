@@ -216,7 +216,7 @@ def visualize_plate_layout(assigned_wells, plate_format, order, output_image=Non
             well = plate_layout[rows - i - 1][j]  
             x = j + 0.5 #centers the circles within each "well"
             y = i + 0.5
-            ax.add_patch(plt.Circle((x, y), 0.4, color='wheat', alpha=0.5))  # Crates a circle as "well"
+            ax.add_patch(plt.Circle((x, y), 0.4, color='plum', alpha=0.5))  # Crates a circle as "well"
 
             if well in well_info:
                 plt.text(x, y, well_info[well], ha='center', va='center', fontsize=6) #center label for Mix 
