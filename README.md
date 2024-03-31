@@ -12,7 +12,7 @@ Install required packages using pip install -r requirements.txt.
 
 ## Usage
 
-Run the script with the following command:
+Run the script with the following terminal command:
 
 </br>
 
@@ -21,6 +21,9 @@ Run the script with the following command:
 
 </br>
 
+Where:
+
+</br>
 
 - `input_csv`: Path to the combined input CSV file.
 - `plate_format`: Plate format (24-well, 96-well, or 384-well).
