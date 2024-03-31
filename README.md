@@ -6,15 +6,15 @@ This Python script (`mixtures_main.py`) computes the volumes of source liquids t
 
 ## Installation
 
-- Clone this repository to your local machine.
+- Clone this repository to your local path.
 - Ensure you have Python installed.
-- Install required packages using
+- Install required packages using:
 
 `pip install -r requirements.txt`
 
 ## Usage
 
-Run the script with the following terminal command:
+Open your terminal and run this script with the following general command:
 
 </br>
 
@@ -23,27 +23,31 @@ Run the script with the following terminal command:
 
 </br>
 
-Where:
+Where you have to assign each input with:
 
 </br>
 
-- `input_csv`: Path to the combined input CSV file.
-- `plate_format`: Plate format (24-well, 96-well, or 384-well).
-- `order`: How mixture order is mapped onto plate (write in quotations "by column", "by row", "snake by column", or "snake by row").
-- `output_csv`: Path to the output CSV file.
+- `input_csv`: Replace with the path to your input CSV file (see requirements below).
+- `plate_format`: Replace with either of the following plate formats: 24-well, 96-well, or 384-well.
+- `order`: Replace by how you want your mixtures to be ordered in the microwell plate (write in quotations "by column", "by row", "snake by column", or "snake by row").
+- `output_csv`: Replace with the path and new file name for your output CSV file.
 
 </br>
 
 ### Use example
 
 
-> `python mixtures_main.py input.csv 96-well "by row" output.csv`
+`python mixtures_main.py input.csv 96-well "by row" output.csv`
+
+</br>
+
+This command will analyse the input.csv file and map the mixtures to a 96-well plate by row (A1, A2, A3...). The script will generate the "output.csv" file with the results.
 
 </br>
 
 ## Input CSV Format
 
-The input CSV should have the following columns:
+Your input CSV should have the following columns, typed exaclty as:
 
 - **Type**: Type of liquid (Either "Source" or "Mixture").
 - **Components**: Components of the source and mixtures. If a mixture, separate the components by commas (i.e NaCl, EDTA, DMSO)
