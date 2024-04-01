@@ -40,11 +40,11 @@ A prompt will also ask wether you require an image map of the resulting plate la
 
 ### Use example
 
-`python mixtures_main.py input.csv 96-well "by row" output.csv`
+`python mixtures_main.py sample_input.csv 96-well "by row" sample_output2.csv`
 
 </br>
 
-This command will analyse the input.csv file and map the mixtures to a 96-well plate by row (A1, A2, A3...). The script will generate the "output.csv" file with the results. 
+This command will analyse the input.csv file and map the mixtures to a 96-well plate by row (A1, A2, A3...). The script will generate the "output.csv" file with the results, as shown in the input/output examples below. 
 
 </br>
 
