@@ -2,12 +2,12 @@ Type,Components,Concentrations (mM),Final Volume (ul)
 Source,Na,100,
 Source,Cl,100,
 Source,EDTA,200,
+Mixture,"Na, Cl","50, 50",100
 Mixture,"Na, Cl","1, 1",100
-Mixture,"Na, Cl","1, 10",100
 Mixture,"Na, EDTA","10, 10",100
 Mixture,"Na, Cl, EDTA","10, 1, 1",100
 Mixture,"Na, Cl, EDTA","10, 1, 1",1000
-Mixture,"Na, Cl, EDTA","10, 1, 1",1000
+Mixture,"Na, Cl, EDTA","10, 10, 10",1000
 Mixture,"Na, Cl, EDTA","10, 1, 0.1",1000
 
 
