@@ -71,13 +71,14 @@ CSV Data: An example of what the data would look like in excel for three stocks 
 |Source |Na          |100                |                 |
 |Source |Cl          |100                |                 |
 |Source |EDTA        |200                |                 |
+|Mixture|Na, Cl      |50, 50             |100              |
 |Mixture|Na, Cl      |1, 1               |100              |
-|Mixture|Na, Cl      |1, 10              |100              |
 |Mixture|Na, EDTA    |10, 10             |100              |
 |Mixture|Na, Cl, EDTA|10, 1, 1           |100              |
 |Mixture|Na, Cl, EDTA|10, 1, 1           |1000             |
-|Mixture|Na, Cl, EDTA|10, 1, 10          |1000             |
+|Mixture|Na, Cl, EDTA|10, 10, 10         |1000             |
 |Mixture|Na, Cl, EDTA|10, 1, 0.1         |1000             |
+
 
 </br>
 </br>
@@ -92,15 +93,15 @@ This script will also output a .png image of the corresponding layout.
 
 </br>
 
-|Mixture Number|Mixture                                                    |Target Well|
-|--------------|-----------------------------------------------------------|-----------|
-|1             |1.00 uL Na + 10.00 uL Cl + 89.00 uL Water                  |A1         |
-|2             |1.00 uL Na + 10.00 uL Cl + 89.00 uL Water                  |A2         |
-|3             |10.00 uL Na + 5.00 uL EDTA + 85.00 uL Water                |A3         |
-|4             |10.00 uL Na + 1.00 uL Cl + 0.50 uL EDTA + 88.50 uL Water   |A4         |
-|5             |100.00 uL Na + 10.00 uL Cl + 5.00 uL EDTA + 885.00 uL Water|A5         |
-|6             |100.00 uL Na + 10.00 uL Cl + 5.00 uL EDTA + 885.00 uL Water|A6         |
-|7             |100.00 uL Na + 10.00 uL Cl + 0.50 uL EDTA + 889.50 uL Water|B1         |
+|Mixture Number|Mixture                                                      |Target Well|
+|--------------|-------------------------------------------------------------|-----------|
+|1             |50.00 uL Na + 50.00 uL Cl + 0.00 uL Water                    |A1         |
+|2             |1.00 uL Na + 1.00 uL Cl + 98.00 uL Water                     |A2         |
+|3             |10.00 uL Na + 5.00 uL EDTA + 85.00 uL Water                  |A3         |
+|4             |10.00 uL Na + 1.00 uL Cl + 0.50 uL EDTA + 88.50 uL Water     |A4         |
+|5             |100.00 uL Na + 10.00 uL Cl + 5.00 uL EDTA + 885.00 uL Water  |A5         |
+|6             |100.00 uL Na + 100.00 uL Cl + 50.00 uL EDTA + 750.00 uL Water|A6         |
+|7             |100.00 uL Na + 10.00 uL Cl + 0.50 uL EDTA + 889.50 uL Water  |A7         |
 
 
 
