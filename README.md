@@ -1,4 +1,4 @@
-# **Mixture Assigner** 
+# **Dilution Microwell plate assigner** 
 
 ## Description
 
