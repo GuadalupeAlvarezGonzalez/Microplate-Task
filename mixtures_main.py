@@ -1,3 +1,6 @@
+#Guadalupe Alvarez, 2024.
+#Dilution/mixture plate assigner script
+
 import pandas as pd
 import numpy as np
 import argparse
@@ -7,11 +10,11 @@ import matplotlib.pyplot as plt
 
 
 def extractor(input_csv): 
-    """ Function to extract data from input CSV file and check for errors within input fiile.
+    """ Extracts and parses data from input CSV file and checks for formatting or structure errors within input fiile.
     input_csv (str): Path to the input CSV file.
     Returns: source_liquids (DataFrame): DataFrame with components and concentrations of source liquids.
              desired_mixtures (DataFrame): DataFrame with components, concentrations, and final volume of the mixtures.
-    Raises ValueError: If the input data is not in correct format or is missing/invalid data.
+    Raises ValueError: If the input data is not in correct format, its invalid or its missing data.
     """
     data = pd.read_csv(input_csv)
     
@@ -33,7 +36,7 @@ def extractor(input_csv):
 
 
 def calculate_volumes(source_liquids, desired_mixtures):
-    """ Calculates volumes of source liquids needed for the desired mixture (based on desired concentrations and final volume).
+    """ Calculates the volumes of source liquids needed for the desired mixture (based on desired concentrations and final volume).
     Parameters: source_liquids (DataFrame): Dataframe with components and concentrations of source liquids.
                 desired_mixtures (DataFrame): Dataframe with components, concentrations, and final volume of desired mixtures.
     Returns: A list containing tuples of calculated resulting mixture and required volumes.
@@ -98,7 +101,7 @@ def get_plate_layout(plate_format):
 
 
 
-def assign_wells(all_mixture_volumes, plate_format, order): # This is the fun function ✨
+def assign_wells(all_mixture_volumes, plate_format, order): # The fun function ✨
     """ This function assigns eachn mixture to a well in a microtiter plate, according to a specified order.
     Inputs: all_mixture_volumes (list of tuples): A list containing tuples of calculated resulting mixture and required volumes.
             plate_format (str): The format of the microtiter plate. Can be '24-well', '96-well', or '384-well'.
@@ -115,8 +118,8 @@ def assign_wells(all_mixture_volumes, plate_format, order): # This is the fun fu
 
     rows = len(plate_layout)
     cols = len(plate_layout[0])
-    plate_size = rows * cols #total number of wells.
-    total_volumes = len(all_mixture_volumes) #total number of mixture samples to assign.
+    plate_size = rows * cols #total number of wells
+    total_volumes = len(all_mixture_volumes) #total number of mixture samples to assign
     
     if total_volumes > plate_size:
         raise ValueError(f"The plate size you are using is {plate_size}, "
@@ -180,9 +183,9 @@ def assign_wells(all_mixture_volumes, plate_format, order): # This is the fun fu
 
 
 def write_results(output_csv, assigned_wells, desired_mixtures):
-    """ For each mixture, writes a CSV output file containing a list of source-liquid volumes (in µl) 
-    to be mixed along with the target well.
-    """
+    """ Writes the output CSV file containing a list of each mixture containing the source-liquid volumes (in µl) needed 
+    to be mixed along with the target well. """
+    
     with open(output_csv, 'w') as file:
         file.write("Mixture Number,Mixture,Target Well\n")
         
@@ -195,8 +198,8 @@ def write_results(output_csv, assigned_wells, desired_mixtures):
 
 
 
-
-def visualize_plate_layout(assigned_wells, plate_format, order, output_image=None): #Very quick plotting!
+#Very quick plotting function, might be nicer to do this with external package instead. 
+def visualize_plate_layout(assigned_wells, plate_format, order, output_image=None):
     """ Quick visualiation of the plate layout with mixtures in their corresponding well. """
     
     well_info = {} # Create well_info dictionary
@@ -210,7 +213,7 @@ def visualize_plate_layout(assigned_wells, plate_format, order, output_image=Non
     plt.figure(figsize=(5, 4)) #make new plot
     ax = plt.gca()
     
-
+    #create a circle and enumerate each to represent each well. 
     for i, row in enumerate(reversed(plate_layout)): 
         for j, _ in enumerate(row):
             well = plate_layout[rows - i - 1][j]  
@@ -244,12 +247,12 @@ def visualize_plate_layout(assigned_wells, plate_format, order, output_image=Non
 
 
 def main(input_csv, plate_format, order, output_csv):
-    """ Main function to execute the workflow of assigning mixtures to wells in a microtiter plate.
+    """ Main function. Executes the assigment of source volumes for each mixtures to the corresponding well in a microtiter plate.
         input_csv (str): The filename of the input CSV file.
         plate_format (str): Either '24-well', '96-well', or '384-well'.
         order (str): Either 'by row', 'by column', 'snake by row', or 'snake by column'.
-        output_csv (str): The filename of the output CSV file.
-    """
+        Returns output_csv (str): The filename of the output CSV file.  """
+    
     source_liquids, desired_mixtures = extractor(input_csv)
     all_mixture_volumes = calculate_volumes(source_liquids, desired_mixtures)
     assigned_wells = assign_wells(all_mixture_volumes, plate_format, order)
@@ -267,7 +270,7 @@ def main(input_csv, plate_format, order, output_csv):
     print(f"\n \n Congrats! Your mixtures output file(s) have been written in your specified path. \n "
         f"You're now a step closer to automating your dilutions!", "\U0001F9EA", "\U0001F916" "\n \n ")
 
-
+#script command line 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=f"Computes volumes of source liquids needed to make" 
     f"required mixture and assign them well locations in a specified well-plate.")
