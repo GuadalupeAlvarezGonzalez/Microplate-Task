@@ -1,8 +1,8 @@
-Mixture,Target Well
-50.00 uL Na + 50.00 uL Cl + 0.00 uL Water, A1
-1.00 uL Na + 1.00 uL Cl + 98.00 uL Water, A2
-10.00 uL Na + 5.00 uL EDTA + 85.00 uL Water, A3
-10.00 uL Na + 1.00 uL Cl + 0.50 uL EDTA + 88.50 uL Water, A4
-100.00 uL Na + 10.00 uL Cl + 5.00 uL EDTA + 885.00 uL Water, A5
-100.00 uL Na + 100.00 uL Cl + 50.00 uL EDTA + 750.00 uL Water, A6
-100.00 uL Na + 10.00 uL Cl + 0.50 uL EDTA + 889.50 uL Water, A7
+Mixture Number,Mixture,Target Well
+1,50.00 uL Na + 50.00 uL Cl + 0.00 uL Water,A1
+2,1.00 uL Na + 1.00 uL Cl + 98.00 uL Water,A2
+3,10.00 uL Na + 5.00 uL EDTA + 85.00 uL Water,A3
+4,10.00 uL Na + 1.00 uL Cl + 0.50 uL EDTA + 88.50 uL Water,A4
+5,100.00 uL Na + 10.00 uL Cl + 5.00 uL EDTA + 885.00 uL Water,A5
+6,100.00 uL Na + 100.00 uL Cl + 50.00 uL EDTA + 750.00 uL Water,A6
+7,100.00 uL Na + 10.00 uL Cl + 0.50 uL EDTA + 889.50 uL Water,A7
